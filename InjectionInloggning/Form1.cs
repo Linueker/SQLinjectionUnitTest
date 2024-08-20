@@ -22,9 +22,10 @@ namespace InjectionInloggning
         private void Inloggning()
         {
             string server = "localhost";
-            string database = "bobby";
-            string dbUser = "applicationLoggin";
-            string dbPass = "GsW25678";
+            string database = "sqlinkectexample";
+
+            string dbUser = "root";
+            string dbPass = "SokrateS13";
 
             string connString = $"SERVER={server};DATABASE={database};UID={dbUser};PASSWORD={dbPass};";
 
@@ -34,16 +35,8 @@ namespace InjectionInloggning
             string user = txtUser.Text;
             string pass = txtPass.Text;
 
-            //Funktionallitet för Trim
-            user = user.Trim();
-            pass = pass.Trim();
-
-            //FUnktionallitet för att ta bort ; mot /
-            user = user.Replace(';', '/');
-            pass = pass.Replace(';', '/');
-
             //Bygger upp SQL querry
-            string sqlQuerry = $"SELECT * FROM users WHERE users_name = '{user}' AND users_password = '{pass}';";
+            string sqlQuerry = $"SELECT * FROM users WHERE users_username = '{user}' AND users_password = '{pass}';";
 
             lblQuerry.Text = sqlQuerry;
 
