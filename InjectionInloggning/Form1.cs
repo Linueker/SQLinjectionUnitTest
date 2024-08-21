@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,6 @@ namespace InjectionInloggning
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
@@ -21,47 +21,72 @@ namespace InjectionInloggning
 
         private void Inloggning()
         {
-            string server = "localhost";
-            string database = "sqlinkectexample";
-
-            string dbUser = "root";
-            string dbPass = "SokrateS13";
-
-            string connString = $"SERVER={server};DATABASE={database};UID={dbUser};PASSWORD={dbPass};";
-
-            MySqlConnection conn = new MySqlConnection(connString);
-
+            
             //Hämta data från textfält
             string user = txtUser.Text;
             string pass = txtPass.Text;
 
-            //Bygger upp SQL querry
-            string sqlQuerry = $"SELECT * FROM users WHERE users_username = '{user}' AND users_password = '{pass}';";
-
-            lblQuerry.Text = sqlQuerry;
-
-            MySqlCommand cmd = new MySqlCommand(sqlQuerry, conn);
-
-            //Exekverar querry
-            try
+            using (InjectionDBContext dbContext = new InjectionDBContext())
             {
-                conn.Open();
+                User currentUser = dbContext.Users.Where(u => u.UserName == user).FirstOrDefault();
 
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                //Kontrollerar resultatet
-                if (reader.Read())
-                    lblStatus.Text = "Du har loggat in";
+                if (currentUser != null)
+                {
+                    if (pass == currentUser.Password)
+                    {
+                        lblStatus.Text = "Du har loggat in";
+                    }
+                    else
+                    {
+                        lblStatus.Text = "Du är utloggad";
+                    }
+                }
                 else
-                    lblStatus.Text = "Du är utloggad";
+                {
+                    MessageBox.Show("Det finns ingen användare med det namnet!");
+                }
+
+                
+                
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            } finally
-            {
-                conn.Close();
-            }
+
+            
+
+            //if (!user.Contains("\"") && !user.Contains("'"))
+            //{
+            //    //Bygger upp SQL querry
+            //    string sqlQuerry = $"SELECT * FROM users WHERE users_username = '{user}' AND users_password = '{pass}';";
+
+            //    lblQuerry.Text = sqlQuerry;
+
+            //    MySqlCommand cmd = new MySqlCommand(sqlQuerry, conn);
+
+            //    //Exekverar querry
+            //    try
+            //    {
+            //        conn.Open();
+
+            //        MySqlDataReader reader = cmd.ExecuteReader();
+
+            //        //Kontrollerar resultatet
+            //        if (reader.Read())
+            //            lblStatus.Text = "Du har loggat in";
+            //        else
+            //            lblStatus.Text = "Du är utloggad";
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        MessageBox.Show(e.Message);
+            //    }
+            //    finally
+            //    {
+            //        conn.Close();
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show(@"Användarnamnet får inte innehålla "" eller '");
+            //}
 
             
         }
@@ -69,6 +94,15 @@ namespace InjectionInloggning
         private void button1_Click(object sender, EventArgs e)
         {
             Inloggning();
+        }
+
+        private void txtUser_TextChanged(object sender, EventArgs e)
+        {
+            if (txtUser.Text.Contains("\"") || txtUser.Text.Contains("'"))
+            {
+                MessageBox.Show(@"Användarnamnet får inte innehålla "" eller '");
+                txtUser.Text = "";    
+            }
         }
     }
 }
