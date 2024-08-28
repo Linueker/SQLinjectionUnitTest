@@ -37,7 +37,7 @@ namespace InjectionInloggning
                 }
                 else
                 {
-                    MessageBox.Show("Det finns ingen användare med det namnet!");
+                    //MessageBox.Show("Det finns ingen användare med det namnet!");
                     return false;
                 }
             }

@@ -38,11 +38,11 @@ namespace InjectionInloggning
 
         private void txtUser_TextChanged(object sender, EventArgs e)
         {
-            if (txtUser.Text.Contains("\"") || txtUser.Text.Contains("'"))
-            {
-                MessageBox.Show(@"Användarnamnet får inte innehålla "" eller '");
-                txtUser.Text = "";
-            }
+            //if (txtUser.Text.Contains("\"") || txtUser.Text.Contains("'"))
+            //{
+            //    MessageBox.Show(@"Användarnamnet får inte innehålla "" eller '");
+            //    txtUser.Text = "";
+            //}
         }
     }
 }
