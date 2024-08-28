@@ -19,6 +19,10 @@ namespace InjectionInloggning
             //Hämta data från textfält
             //string user = txtUser.Text;
             //string pass = txtPass.Text;
+            if(user.Contains("\"") || user.Contains("'"))
+            {
+                return false; 
+            }
 
             using (InjectionDBContext dbContext = new InjectionDBContext())
             {

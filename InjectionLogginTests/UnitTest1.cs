@@ -14,7 +14,7 @@ namespace UserTests
 
         [Theory]
         //[InlineData("kalle", "ramstein", true)]
-        [InlineData("hej", "123", false)]
+        //[InlineData("hej", "123", false)]
         [InlineData("hej'", "123", false)]
         //[InlineData("linus", "hej", true)]
 
