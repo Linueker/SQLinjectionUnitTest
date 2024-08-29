@@ -23,9 +23,10 @@ namespace InjectionInloggning
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string user = txtUser.Text; 
+            User user = new User();
+            string userName = txtUser.Text; 
             string pass = txtPass.Text;
-            isLoggedIn = User.Inloggning(user, pass);
+            isLoggedIn = user.Inloggning(userName, pass);
             if (isLoggedIn)
             {
                 lblStatus.Text = "Du är inloggad";
@@ -33,16 +34,14 @@ namespace InjectionInloggning
             else
             {
                 lblStatus.Text = "Du är utloggad";
+                txtUser.Text = "";
+                txtPass.Text = "";
             }
         }
 
         private void txtUser_TextChanged(object sender, EventArgs e)
         {
-            //if (txtUser.Text.Contains("\"") || txtUser.Text.Contains("'"))
-            //{
-            //    MessageBox.Show(@"Användarnamnet får inte innehålla "" eller '");
-            //    txtUser.Text = "";
-            //}
+            
         }
     }
 }

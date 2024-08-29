@@ -14,14 +14,11 @@ namespace InjectionInloggning
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        public static bool Inloggning(string user, string pass)
+        public bool Inloggning(string user, string pass)
         {
-            //Hämta data från textfält
-            //string user = txtUser.Text;
-            //string pass = txtPass.Text;
             if(user.Contains("\"") || user.Contains("'"))
             {
-                return false; 
+                return false;
             }
 
             using (InjectionDBContext dbContext = new InjectionDBContext())
@@ -45,42 +42,6 @@ namespace InjectionInloggning
                     return false;
                 }
             }
-
-            //if (!user.Contains("\"") && !user.Contains("'"))
-            //{
-            //    //Bygger upp SQL querry
-            //    string sqlQuerry = $"SELECT * FROM users WHERE users_username = '{user}' AND users_password = '{pass}';";
-
-            //    lblQuerry.Text = sqlQuerry;
-
-            //    MySqlCommand cmd = new MySqlCommand(sqlQuerry, conn);
-
-            //    //Exekverar querry
-            //    try
-            //    {
-            //        conn.Open();
-
-            //        MySqlDataReader reader = cmd.ExecuteReader();
-
-            //        //Kontrollerar resultatet
-            //        if (reader.Read())
-            //            lblStatus.Text = "Du har loggat in";
-            //        else
-            //            lblStatus.Text = "Du är utloggad";
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        MessageBox.Show(e.Message);
-            //    }
-            //    finally
-            //    {
-            //        conn.Close();
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show(@"Användarnamnet får inte innehålla "" eller '");
-            //}
         }
     }
 }
